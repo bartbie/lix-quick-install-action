@@ -8,5 +8,7 @@ pkgs.mkShell {
     nixfmt
     nixd
     npins
+    just
+    treefmt
   ];
 }
