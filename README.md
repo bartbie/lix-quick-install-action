@@ -2,6 +2,8 @@
 
 [![ci/cd pipeline static](https://img.shields.io/github/actions/workflow/status/canidae-solutions/lix-quick-install-action/cicd.yml)](https://github.com/canidae-solutions/lix-quick-install-action/actions/workflows/cicd.yml) [![latest release](https://img.shields.io/github/v/release/canidae-solutions/lix-quick-install-action)](https://github.com/canidae-solutions/lix-quick-install-action/releases/latest) ![trans rights](https://pride-badges.pony.workers.dev/static/v1?label=trans%20rights&stripeWidth=6&stripeColors=5BCEFA,F5A9B8,FFFFFF,F5A9B8,5BCEFA)
 
+
+
 sets up [lix](https://lix.systems/) in single-user mode on github actions, really fast.
 
 - how fast? ~5 seconds tops, in our testing
@@ -54,10 +56,34 @@ nix (Lix, like Nix) 2.90.0
 
 the action supports a few optional configurations, to fine-tune the installation behaviour. [action.yml](action.yml) is where all the options are defined, but here's a quick reference:
 
-| option              | description                                                                                                                                                   | default                                                                |
-|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
-| `lix_version`       | the version of lix to install. check the [releases](https://github.com/canidae-solutions/lix-quick-install-action/releases) for a list of supported versions. | 2.94.0                                                                 |
-| `lix_conf`          | extra configuration options to add to `/etc/nix/nix.conf`.                                                                                                    | `<empty>`                                                                     |
+| option                | description                                                                                                                                                   | default                                                                |
+|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
+| `lix_version`         | the version of lix to install. check the [releases](https://github.com/canidae-solutions/lix-quick-install-action/releases) for a list of supported versions. | `packages.<system>.lix.version`                                        |
+| `lix_conf`            | extra configuration options to add to `/etc/nix/nix.conf`.                                                                                                    | `<empty>`                                                              |
 | `github_access_token` | the access token to use when fetching github repositories.                                                                                                    | `${{ github.token }}` (ie. the same token exposed during actions runs) |
-| `lix_on_tmpfs`      | whether to install the lix store on a tmpfs. this can speed up lix builds a little bit, at the expense of using extra memory in the runner.                   | `false`                                                                |
-| `enable_kvm`        | whether to enable kvm on linux runners if supported. this helps builds run a lot faster - we recommend leaving this on unless you run into issues with it.    | `true`                                                                 |
+| `lix_on_tmpfs`        | whether to install the lix store on a tmpfs. this can speed up lix builds a little bit, at the expense of using extra memory in the runner.                   | `false`                                                                |
+| `enable_kvm`          | whether to enable kvm on linux runners if supported. this helps builds run a lot faster - we recommend leaving this on unless you run into issues with it.    | `true`                                                                 |
+
+
+
+## arch (aka what fork changed)
+
+repo uses now flake-parts for its internal architecture while still being flakeless to keep evaluation time reasonably short and not depend on experimental features in your ci/cd.
+
+`manifest.json` declares metadata necessary to generate `./.github`, `./action.yml`, `./RELEASE`. this way entire repo can self-update on minor versions weekly + manually adding new lix version sets should easy.
+
+`action-lock.json` pins actions used in internal ci/cd by sha to avoid supply-chain attacks.
+
+## repo helpers
+
+- `write-repo` - writes every generated file onto fs
+
+- `bump-release-minor` - bumps in-place minor version in `manifest.json` and `RELEASE`
+ 
+- `update <lix version set?>` - write-repo + bumps-release-minor + optionally adds lix version set to `manifest.json`
+
+- `bump-pins` - updates in-place `action-lock.json`
+
+for rest of helpers check `./modules/recipes.nix`, `./modules/shell.nix` or `justfile`
+
+![trans rights](https://pride-badges.pony.workers.dev/static/v1?label=trans%20rights&stripeWidth=6&stripeColors=5BCEFA,F5A9B8,FFFFFF,F5A9B8,5BCEFA)

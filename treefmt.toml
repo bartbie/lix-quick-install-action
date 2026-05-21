@@ -1,3 +1,18 @@
 [formatter.nix]
 command = "nixfmt"
 includes = [ "*.nix" ]
+
+[formatter.json]
+command = "bash"
+options = [
+  "-euc",
+  '''
+  for f in "$@"; do
+    tmp=$(mktemp)
+    jq . "$f" > "$tmp" && mv "$tmp" "$f"
+  done
+  ''',
+  "--",
+]
+includes = [ "*.json" ]
+excludes = ["**/npins/*.json", "**/niv/nix/*.json"]

@@ -1,4 +1,0 @@
-v4.0.1
-
-## changes
-- fix `lix_conf` option not being able to override `experimental-options` (#21, thanks @daylinmorgan!)

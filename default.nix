@@ -1,33 +1,16 @@
 let
-  pins = import ./npins;
-  nixpkgs = import pins.nixpkgs {
-    config = { };
-    overlays = [ ];
+  sources = import ./npins;
+  with-inputs = import sources.with-inputs sources {
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
+    files = sources.files // {
+      flake = false;
+    };
+    # uncomment on CI for local checkout
+    # flake-file = import ./../../modules;
   };
+
+  outputs =
+    inputs@{ flake-parts, import-tree, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } (import-tree ./modules);
 in
-
-{
-  pkgs ? nixpkgs,
-  system ? pkgs.stdenv.hostPlatform.system,
-}:
-
-let
-  archives = pkgs.callPackage ./nix/archives.nix { };
-in
-rec {
-  # The nixpkgs set we build everything with, in case you wanted that.
-  inherit pkgs;
-
-  # All versions of Lix supported by the given system (default: the system being built on).
-  lixVersions = archives.lixVersionsFor system;
-  # Archives for all supported Lix versions.
-  lixArchives = archives.lixArchivesFor system;
-
-  # All Lix archives for the given system.
-  combinedArchives = archives.combinedArchivesFor system;
-
-  # The release script used in CI/CD to cut a new release.
-  releaseScript = pkgs.callPackage ./nix/release-script.nix {
-    inherit (archives) lixArchivesFor;
-  };
-}
+with-inputs outputs

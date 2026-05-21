@@ -1,0 +1,18 @@
+{
+  "owner": "bartbie",
+  "repo": "lix-quick-install-action",
+  "lixSeries": [
+    "2.95",
+    "2.94"
+  ],
+  "singleRunner": "ubuntu-24.04",
+  "runners": [
+    "ubuntu-24.04",
+    "ubuntu-24.04-arm",
+    "macos-15",
+    "macos-15-intel"
+  ],
+  "release": {
+    "version": "1.0.0"
+  }
+}

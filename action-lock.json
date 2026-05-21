@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "actions": {
+    "lix-quick-install": {
+      "repo": "canidae-solutions/lix-quick-install-action",
+      "version": "4",
+      "sha": "cdb5d0931be2223edbb9bad884341fcacdac298f"
+    },
+    "cachix": {
+      "repo": "cachix/cachix-action",
+      "version": "17",
+      "sha": "5f2d7c5294214f71b873db4b969586b980625e71"
+    },
+    "checkout": {
+      "repo": "actions/checkout",
+      "version": "6",
+      "sha": "de0fac2e4500dabe0009e67214ff5f5447ce83dd"
+    },
+    "download-artifact": {
+      "repo": "actions/download-artifact",
+      "version": "8",
+      "sha": "3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c"
+    },
+    "upload-artifact": {
+      "repo": "actions/upload-artifact",
+      "version": "7",
+      "sha": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a"
+    },
+    "harden-runner": {
+      "repo": "step-security/harden-runner",
+      "version": "2",
+      "sha": "9af89fc71515a100421586dfdb3dc9c984fbf411"
+    }
+  }
+}
