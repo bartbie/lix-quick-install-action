@@ -21,7 +21,11 @@ in
   ];
 
   _module.args = commonArgs;
-  perSystem._module.args = commonArgs // {
-    pkgs = import inputs.nixpkgs { };
-  };
+  perSystem =
+    { system, ... }:
+    {
+      _module.args = commonArgs // {
+        pkgs = import inputs.nixpkgs { inherit system; };
+      };
+    };
 }
