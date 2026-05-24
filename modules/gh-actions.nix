@@ -77,6 +77,10 @@
       action-bootstrap = mkAction "lix-quick-install"; # v4
       bootstrap-url = "https://github.com/canidae-solutions/lix-quick-install-action/releases/download/v4.0.0";
 
+      # Older bootstrap: upstream v4.0.0 lacks current `lix_version`.
+      # Remove once `bootstrap-url` is self-hosted.
+      bootstrap_lix_version = "2.94.0";
+
       # StepSecurity harden-runner: must be the FIRST step in every job so it
       # can hook the runner before any other code executes. `audit` mode logs
       # egress without blocking - flip to `block` + `allowed-endpoints` once
@@ -179,7 +183,7 @@
                     action-cicd-checkout
                     (uses action-bootstrap {
                       lix_archives_url = bootstrap-url;
-                      inherit lix_version;
+                      lix_version = bootstrap_lix_version;
                     })
                     action-cachix
                     (lib.forEach linux-arm-runners (
@@ -341,7 +345,7 @@
                     action-checkout-writable
                     (uses action-bootstrap {
                       lix_archives_url = bootstrap-url;
-                      inherit lix_version;
+                      lix_version = bootstrap_lix_version;
                     })
                     (run "Update nixpkgs" /* sh */ "nix-shell ./shell.nix --run 'npins update nixpkgs'")
                     (run "Check for changes" { id = "diff"; } /* sh */ ''
