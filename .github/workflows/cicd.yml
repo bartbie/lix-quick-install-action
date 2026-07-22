@@ -7,18 +7,18 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411
+      - uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920
         with:
           egress-policy: audit
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
           ref: ${{ inputs.ref }}
-      - uses: canidae-solutions/lix-quick-install-action@cdb5d0931be2223edbb9bad884341fcacdac298f
+      - uses: bartbie/lix-quick-install-action@e07739546a849eef488721581ac80fd10b5fa2d8
         with:
           lix_archives_url: https://github.com/bartbie/lix-quick-install-action/releases/download/1.0.0
           lix_version: 2.95.2
-      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71
+      - uses: cachix/cachix-action@02b16339eddcf6ea27126a830c7f1992855cae13
         with:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           name: bartbie
@@ -55,10 +55,10 @@ jobs:
       contents: write
     runs-on: ubuntu-24.04
     steps:
-      - uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411
+      - uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920
         with:
           egress-policy: audit
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
           ref: ${{ inputs.ref }}
@@ -82,7 +82,7 @@ jobs:
         with:
           lix_archives_url: file:///tmp/archives
           lix_version: 2.95.2
-      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71
+      - uses: cachix/cachix-action@02b16339eddcf6ea27126a830c7f1992855cae13
         with:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           name: bartbie
@@ -98,10 +98,10 @@ jobs:
     needs: build
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411
+      - uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920
         with:
           egress-policy: audit
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
           ref: ${{ inputs.ref }}
@@ -137,10 +137,10 @@ jobs:
     needs: build
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411
+      - uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920
         with:
           egress-policy: audit
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
           ref: ${{ inputs.ref }}
@@ -152,7 +152,7 @@ jobs:
         with:
           lix_archives_url: file://${{ steps.lix-archives.outputs.download-path }}
           lix_version: ${{ matrix.version }}
-      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71
+      - uses: cachix/cachix-action@02b16339eddcf6ea27126a830c7f1992855cae13
         with:
           name: bartbie
           skipPush: true
