@@ -13,18 +13,20 @@
     {
       config,
       manifest,
-      action-lock,
+      sources,
       ...
     }:
     let
       inherit (manifest) runners owner;
 
+      # Reading .revision never fetches: npins hands back `spec // { outPath =
+      # ...; }` and only forcing outPath hits the network.
       mkAction =
         name:
         let
-          inherit (action-lock.actions.${name}) repo sha;
+          pin = sources."action-${name}";
         in
-        "${repo}@${sha}";
+        "${pin.repository.owner}/${pin.repository.repo}@${pin.revision}";
 
       overrideWith = attr: new: (attr // { with_ = (attr.with_ or { }) // new; });
 
@@ -74,7 +76,11 @@
 
       lix_version = config.packages.lix.version;
 
-      action-bootstrap = mkAction "lix-quick-install"; # v4
+      # The bootstrap action and the archives it installs have to come from the
+      # same release, so this ref is derived from `bootstrap` rather than pinned
+      # separately. An explicit bootstrap can name a `sha`; self-mode falls back
+      # to its own tag, which is a ref this repo controls.
+      action-bootstrap = "${bootstrap.repo}@${bootstrap.sha or bootstrap.tag}";
 
       # Where the archives the CI bootstraps from come from. Setting
       # `manifest.bootstrap` points at somebody else's release, which is what a

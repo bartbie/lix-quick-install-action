@@ -21,7 +21,7 @@
             add-new-lix
             update
             sync-release
-            bump-pins
+            bump-actions
             ;
         });
       };

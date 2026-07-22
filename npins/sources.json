@@ -1,5 +1,85 @@
 {
   "pins": {
+    "action-cachix": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "cachix",
+        "repo": "cachix-action"
+      },
+      "pre_releases": false,
+      "version_upper_bound": "18",
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v17",
+      "revision": "02b16339eddcf6ea27126a830c7f1992855cae13",
+      "url": "https://api.github.com/repos/cachix/cachix-action/tarball/refs/tags/v17",
+      "hash": "sha256-mXmv4hD0g1bvUMkUU2DnYq6nrBcQOLBv5jEkE1iDWoo="
+    },
+    "action-checkout": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "actions",
+        "repo": "checkout"
+      },
+      "pre_releases": false,
+      "version_upper_bound": "7",
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v6.1.0",
+      "revision": "d23441a48e516b6c34aea4fa41551a30e30af803",
+      "url": "https://api.github.com/repos/actions/checkout/tarball/refs/tags/v6.1.0",
+      "hash": "sha256-+LEn5FZGIUmWMokYrKUxzcfGQHoIirjmutfBCTHK8XA="
+    },
+    "action-download-artifact": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "actions",
+        "repo": "download-artifact"
+      },
+      "pre_releases": false,
+      "version_upper_bound": "9",
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v8.0.1",
+      "revision": "3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "url": "https://api.github.com/repos/actions/download-artifact/tarball/refs/tags/v8.0.1",
+      "hash": "sha256-L/rlDJGzm8BbT6Ue+3jYg7Q8Eyv1eLl8br72aLOjO3Y="
+    },
+    "action-harden-runner": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "step-security",
+        "repo": "harden-runner"
+      },
+      "pre_releases": false,
+      "version_upper_bound": "3",
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v2.20.0",
+      "revision": "bf7454d06d71f1098171f2acdf0cd4708d7b5920",
+      "url": "https://api.github.com/repos/step-security/harden-runner/tarball/refs/tags/v2.20.0",
+      "hash": "sha256-Gea+n9Q5PtMLN6xJLbClwPGKYcAFsz5hvJGIG5C6GBM="
+    },
+    "action-upload-artifact": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "actions",
+        "repo": "upload-artifact"
+      },
+      "pre_releases": false,
+      "version_upper_bound": "8",
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v7.0.1",
+      "revision": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+      "url": "https://api.github.com/repos/actions/upload-artifact/tarball/refs/tags/v7.0.1",
+      "hash": "sha256-rbXR+imRFUws5v5GuPDmPygDkUz2wuzSdAPKdoQ9inM="
+    },
     "files": {
       "type": "Git",
       "repository": {

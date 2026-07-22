@@ -16,8 +16,8 @@ write-repo:
 bump-release-minor:
     @just _run bump-release-minor
 
-bump-pins:
-    @just _run bump-pins
+bump-actions:
+    @just _run bump-actions
 
 add-new-lix version-set:
     @just _run add-new-lix {{ version-set }}

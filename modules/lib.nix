@@ -5,7 +5,6 @@ let
 in
 {
   flake.actionLib = {
-    scriptsPath = ../scripts;
     # "2.95" -> "lix_2_95"; matches the attr naming in pkgs.lixPackageSets.
     seriesToAttr = s: "lix_${normalizeVer s}";
 

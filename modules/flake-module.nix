@@ -6,9 +6,10 @@
 }:
 let
   manifest = builtins.fromJSON (builtins.readFile ../manifest.json);
-  action-lock = builtins.fromJSON (builtins.readFile ../action-lock.json);
+  # Only the action-* pins; the rest are already in `inputs`.
+  sources = import ../npins;
   commonArgs = {
-    inherit manifest action-lock;
+    inherit manifest sources;
     inherit (config.flake) actionLib;
   };
 in

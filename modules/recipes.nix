@@ -1,4 +1,4 @@
-{ lib, actionLib, ... }:
+{ lib, ... }:
 {
 
   perSystem =
@@ -119,7 +119,7 @@
                 bump-release-minor,
                 write-repo,
                 sync-release,
-                bump-pins,
+                bump-actions,
               }:
               pkgs.writers.writeBashBin "update" { }
                 # sh
@@ -134,7 +134,7 @@
                       ${add-new-lix}/bin/add-new-lix "$1"
                   fi
 
-                  ${bump-pins}/bin/bump-pins && \
+                  ${bump-actions}/bin/bump-actions && \
                   ${bump-release-minor}/bin/bump-release-minor && \
                   ${write-repo}/bin/write-repo && \
                   ${sync-release}/bin/sync-release
@@ -146,27 +146,31 @@
                 bump-release-minor
                 write-repo
                 sync-release
-                bump-pins
+                bump-actions
                 ;
             };
 
-        bump-pins = pkgs.callPackage (
+        # Bump every action-* pin. The name filter is the same rule default.nix
+        # uses to keep these out of the flake inputs, so adding a pin needs no
+        # edit here.
+        bump-actions = pkgs.callPackage (
           {
+            npins,
             jq,
             git,
-            gh,
           }:
-          pkgs.writers.writeBashBin "bump-pins" { }
+          pkgs.writers.writeBashBin "bump-actions" { }
             # sh
             ''
-              export PATH="${
-                lib.makeBinPath [
-                  jq
-                  gh
-                  git
-                ]
-              }:$PATH"
-              ${builtins.readFile (actionLib.scriptsPath + /bump-pins.sh)}
+              set -o errexit
+              set -o nounset
+              set -o pipefail
+
+              root="$(${lib.getExe git} rev-parse --show-toplevel)"
+              cd "$root"
+              mapfile -t pins < <(${lib.getExe jq} -r \
+                '.pins | keys[] | select(startswith("action-"))' npins/sources.json)
+              ${lib.getExe npins} update "''${pins[@]}"
             ''
         ) { };
       };
