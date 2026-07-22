@@ -75,11 +75,14 @@
       lix_version = config.packages.lix.version;
 
       action-bootstrap = mkAction "lix-quick-install"; # v4
-      bootstrap-url = "https://github.com/canidae-solutions/lix-quick-install-action/releases/download/v4.0.0";
 
-      # Older bootstrap: upstream v4.0.0 lacks current `lix_version`.
-      # Remove once `bootstrap-url` is self-hosted.
-      bootstrap_lix_version = "2.94.0";
+      # Bootstrap off our own last *published* release. This pair has to lag
+      # `manifest.release.version` and `packages.lix.version`, which name the
+      # release currently being built - that one has no assets yet. Bump both by
+      # hand once a release is out.
+      bootstrap-release = "1.0.0";
+      bootstrap_lix_version = "2.95.2";
+      bootstrap-url = "https://github.com/${owner}/${manifest.repo}/releases/download/${bootstrap-release}";
 
       # StepSecurity harden-runner: must be the FIRST step in every job so it
       # can hook the runner before any other code executes. `audit` mode logs
