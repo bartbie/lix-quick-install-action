@@ -61,6 +61,7 @@ name: Quick Install Lix
 runs:
   steps:
     - env:
+        ACTION_REPOSITORY: bartbie/lix-quick-install-action
         ENABLE_KVM: ${{ inputs.enable_kvm }}
         GITHUB_ACCESS_TOKEN: ${{ inputs.github_access_token }}
         LIX_ARCHIVES_URL: ${{ inputs.lix_archives_url }}

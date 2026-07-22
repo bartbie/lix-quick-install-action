@@ -50,8 +50,8 @@ jobs:
         with: {}
       - uses: canidae-solutions/lix-quick-install-action@cdb5d0931be2223edbb9bad884341fcacdac298f
         with:
-          lix_archives_url: https://github.com/canidae-solutions/lix-quick-install-action/releases/download/v4.0.0
-          lix_version: 2.94.0
+          lix_archives_url: https://github.com/bartbie/lix-quick-install-action/releases/download/1.0.0
+          lix_version: 2.95.2
       - name: Update nixpkgs
         run: nix-shell ./shell.nix --run 'npins update nixpkgs'
       - id: diff
