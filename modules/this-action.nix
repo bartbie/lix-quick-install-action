@@ -87,6 +87,9 @@
               shell = "bash";
               env = {
                 RELEASE_FILE = "\${{ github.action_path }}/RELEASE";
+                # Fallback for when GITHUB_ACTION_REPOSITORY is unset, i.e. the
+                # action is used locally as `uses: ./`.
+                ACTION_REPOSITORY = "${manifest.owner}/${manifest.repo}";
                 LIX_VERSION = "\${{ inputs.lix_version }}";
                 LIX_CONF = "\${{ inputs.lix_conf }}";
                 LIX_ARCHIVES_URL = "\${{ inputs.lix_archives_url }}";

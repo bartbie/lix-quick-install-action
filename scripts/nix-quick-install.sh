@@ -26,7 +26,7 @@ case "$OSTYPE" in
     sys="$arch-linux"
     ;;
   *)
-    echo >& "unsupported OS type: $OSTYPE"
+    echo >&2 "unsupported OS type: $OSTYPE"
     exit 1
 esac
 
@@ -76,12 +76,16 @@ else
   tar=tar
 fi
 rel="$(head -n1 "$RELEASE_FILE")"
-url="${LIX_ARCHIVES_URL:-https://github.com/canidae-solutions/lix-quick-install-action/releases/download/$rel}/lix-$LIX_VERSION-$sys.tar.zstd"
+# GITHUB_ACTION_REPOSITORY is the owner/repo the action was resolved from, so a
+# fork serves its own archives without editing anything. It is unset for local
+# `uses: ./`, hence the generated fallback.
+repo="${GITHUB_ACTION_REPOSITORY:-$ACTION_REPOSITORY}"
+url="${LIX_ARCHIVES_URL:-https://github.com/$repo/releases/download/$rel}/lix-$LIX_VERSION-$sys.tar.zstd"
 
 echo >&2 "Fetching lix archives from $url"
 case "$url" in
-  file://)
-    "$tar" --skip-old-files --strip-components 1 -x -I unzstd -C /nix "${url#file://}"
+  file://*)
+    "$tar" --skip-old-files --strip-components 1 -x -I unzstd -C /nix -f "${url#file://}"
     ;;
   *)
     curl -sL --retry 3 --retry-connrefused "$url" \
