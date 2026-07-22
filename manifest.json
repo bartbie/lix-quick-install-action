@@ -1,6 +1,7 @@
 {
   "owner": "bartbie",
   "repo": "lix-quick-install-action",
+  "bootstrap": null,
   "lixSeries": [
     "2.95",
     "2.94"
@@ -13,6 +14,10 @@
     "macos-15-intel"
   ],
   "release": {
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "previous": {
+      "version": "1.0.0",
+      "lixVersion": "2.95.2"
+    }
   }
 }

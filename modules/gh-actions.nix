@@ -76,13 +76,36 @@
 
       action-bootstrap = mkAction "lix-quick-install"; # v4
 
-      # Bootstrap off our own last *published* release. This pair has to lag
-      # `manifest.release.version` and `packages.lix.version`, which name the
-      # release currently being built - that one has no assets yet. Bump both by
-      # hand once a release is out.
-      bootstrap-release = "1.0.0";
-      bootstrap_lix_version = "2.95.2";
-      bootstrap-url = "https://github.com/${owner}/${manifest.repo}/releases/download/${bootstrap-release}";
+      # Where the archives the CI bootstraps from come from. Setting
+      # `manifest.bootstrap` points at somebody else's release, which is what a
+      # fresh fork needs - it has published nothing to bootstrap off yet. Null
+      # means "the previous release of this repo", recorded in
+      # `manifest.release.previous` by bump-release-minor.
+      #
+      # Either way this trails `manifest.release.version` and
+      # `packages.lix.version`, which name the release being built right now.
+      # That one has no assets until CI publishes it.
+      bootstrap =
+        let
+          prev = manifest.release.previous or null;
+        in
+        if manifest.bootstrap != null then
+          manifest.bootstrap
+        else
+          assert lib.assertMsg (prev != null) ''
+            manifest.bootstrap is null but manifest.release.previous is unset, so
+            there is no earlier release of ${owner}/${manifest.repo} to bootstrap
+            from. Point manifest.bootstrap at an upstream release until this fork
+            has published one of its own.
+          '';
+          {
+            repo = "${owner}/${manifest.repo}";
+            tag = prev.version;
+            inherit (prev) lixVersion;
+          };
+
+      bootstrap_lix_version = bootstrap.lixVersion;
+      bootstrap-url = "https://github.com/${bootstrap.repo}/releases/download/${bootstrap.tag}";
 
       # StepSecurity harden-runner: must be the FIRST step in every job so it
       # can hook the runner before any other code executes. `audit` mode logs

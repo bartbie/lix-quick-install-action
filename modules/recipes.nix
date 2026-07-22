@@ -68,7 +68,14 @@
               cd "$root"
               manifest="$root/manifest.json"
               tmp="$(mktemp)"
-              ${lib.getExe jq} '.release.version |= (split(".") | .[1] = (.[1]|tonumber+1|tostring) | .[2] = "0" | join("."))' "$manifest" > "$tmp" 
+              # The version being retired becomes release.previous, which is what
+              # a null manifest.bootstrap follows. lixVersion is baked in at build
+              # time, so run this before re-entering the shell on a new nixpkgs -
+              # `update` already orders it that way.
+              ${lib.getExe jq} --arg lix "${config.packages.lix.version}" '
+                .release.previous = { version: .release.version, lixVersion: $lix }
+                | .release.version |= (split(".") | .[1] = (.[1]|tonumber+1|tostring) | .[2] = "0" | join("."))
+              ' "$manifest" > "$tmp"
               mv "$tmp" "$manifest"
               ${sync-release}/bin/sync-release
             ''
