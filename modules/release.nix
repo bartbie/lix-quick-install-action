@@ -9,13 +9,17 @@
       pkgs,
       config,
       manifest,
+      actionLib,
       ...
     }:
     {
       files.files = [
         {
           path = "RELEASE";
-          drv = pkgs.writeText "RELEASE" manifest.release.version;
+          # This string becomes the git tag, so it goes through toTag. Trailing
+          # newline included to match what sync-release's jq writes, otherwise
+          # the two writers flip the file back and forth.
+          drv = pkgs.writeText "RELEASE" "${actionLib.toTag manifest.release.version}\n";
         }
       ];
       # Create a shell script to cut a new release. The script runs at the end of the CI/CD workflow, and creates a new tagged

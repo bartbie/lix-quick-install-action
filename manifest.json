@@ -1,7 +1,11 @@
 {
   "owner": "bartbie",
   "repo": "lix-quick-install-action",
-  "bootstrap": null,
+  "bootstrap": {
+    "repo": "bartbie/lix-quick-install-action",
+    "tag": "1.0.0",
+    "lixVersion": "2.95.2"
+  },
   "lixSeries": [
     "2.95",
     "2.94"

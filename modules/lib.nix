@@ -23,6 +23,10 @@ in
       in
       lib.listToAttrs (builtins.map mapLix (lixen system));
 
+    # Release tags carry a `v`, manifest.json stores bare semver. Normalize at
+    # every point that names a real tag rather than trusting either side.
+    toTag = v: "v${lib.removePrefix "v" v}";
+
     sortVersions =
       vrs:
       lib.pipe vrs [

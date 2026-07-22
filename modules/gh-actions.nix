@@ -100,7 +100,7 @@
           '';
           {
             repo = "${owner}/${manifest.repo}";
-            tag = prev.version;
+            tag = actionLib.toTag prev.version;
             inherit (prev) lixVersion;
           };
 

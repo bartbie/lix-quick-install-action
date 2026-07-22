@@ -47,7 +47,8 @@
               cd "$root"
               manifest="$root/manifest.json"
               release="$root/RELEASE"
-              ${lib.getExe jq} -r '.release.version' "$manifest" > "$release"
+              # Same normalization as modules/release.nix - RELEASE is the tag.
+              ${lib.getExe jq} -r '.release.version | "v" + ltrimstr("v")' "$manifest" > "$release"
             ''
         ) { };
 
