@@ -26,6 +26,22 @@ in
     # every point that names a real tag rather than trusting either side.
     toTag = v: "v${lib.removePrefix "v" v}";
 
+    # Runner label -> platform. Labels mark the arch exception and leave the
+    # default implicit, in opposite directions: linux is x86_64 unless -arm,
+    # macos is aarch64 unless -intel. The nix double and the suffix
+    # upload-artifact names both follow from the label, so manifest.runners
+    # stays the only list a platform is added to or dropped from.
+    runnerPlatform =
+      runner:
+      let
+        darwin = lib.hasPrefix "macos" runner;
+        arm = if darwin then !lib.hasInfix "intel" runner else lib.hasInfix "arm" runner;
+      in
+      {
+        system = "${if arm then "aarch64" else "x86_64"}-${if darwin then "darwin" else "linux"}";
+        artifact = "${if darwin then "macOS" else "Linux"}-${if arm then "ARM64" else "X64"}";
+      };
+
     sortVersions =
       vrs:
       lib.pipe vrs [

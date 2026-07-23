@@ -53,10 +53,11 @@
         inherit uses with_;
       };
 
+      # Matches the runner.os-runner.arch suffix the build job uploads under.
       downloadFor =
-        arch:
+        runner:
         uses (mkAction "download-artifact") {
-          name = "lix-archives-${arch}";
+          name = "lix-archives-${(actionLib.runnerPlatform runner).artifact}";
           path = "/tmp/archives";
         };
 
@@ -299,12 +300,7 @@
                     action-harden
                     action-cicd-checkout
                   ]
-                  ++ builtins.map downloadFor [
-                    "Linux-X64"
-                    "Linux-ARM64"
-                    "macOS-X64"
-                    "macOS-ARM64"
-                  ]
+                  ++ builtins.map downloadFor runners
                   ++ [
                     (uses "./" {
                       lix_archives_url = "file:///tmp/archives";
