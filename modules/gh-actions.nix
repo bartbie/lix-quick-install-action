@@ -402,12 +402,19 @@
                   ];
                 }
               ];
-              gate = onSuccess "needs.prepare" ({
-                needs = "prepare";
-                uses = "./.github/workflows/cicd.yml";
-                with_.ref = "auto/update-nixpkgs";
-                secrets = "inherit";
-              });
+              # A called workflow cannot request more than the caller grants, and
+              # cicd's release job asks for contents: write. Without this the run
+              # dies at startup, even though release is if-guarded to push-on-main
+              # and never fires from here.
+              gate = lib.mkMerge [
+                writePerms
+                (onSuccess "needs.prepare" ({
+                  needs = "prepare";
+                  uses = "./.github/workflows/cicd.yml";
+                  with_.ref = "auto/update-nixpkgs";
+                  secrets = "inherit";
+                }))
+              ];
               merge = lib.mkMerge [
                 singleRunner
                 writePerms
