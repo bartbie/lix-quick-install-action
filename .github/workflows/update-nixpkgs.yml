@@ -48,9 +48,9 @@ jobs:
           egress-policy: audit
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with: {}
-      - uses: bartbie/lix-quick-install-action@e07739546a849eef488721581ac80fd10b5fa2d8
+      - uses: bartbie/lix-quick-install-action@v1.0.0
         with:
-          lix_archives_url: https://github.com/bartbie/lix-quick-install-action/releases/download/1.0.0
+          lix_archives_url: https://github.com/bartbie/lix-quick-install-action/releases/download/v1.0.0
           lix_version: 2.95.2
       - name: Update nixpkgs
         run: nix-shell ./shell.nix --run 'npins update nixpkgs'

@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
-      - uses: bartbie/lix-quick-install-action@e07739546a849eef488721581ac80fd10b5fa2d8
+      - uses: bartbie/lix-quick-install-action@v1.0.0
         with: {}
       - name: nix run
         run: nix run ./examples/flakes
@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
-      - uses: bartbie/lix-quick-install-action@e07739546a849eef488721581ac80fd10b5fa2d8
+      - uses: bartbie/lix-quick-install-action@v1.0.0
         with: {}
       - name: nix run
         run: nix run -f examples/niv
@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
-      - uses: bartbie/lix-quick-install-action@e07739546a849eef488721581ac80fd10b5fa2d8
+      - uses: bartbie/lix-quick-install-action@v1.0.0
         with: {}
       - name: nix run
         run: nix run -f examples/npins
@@ -55,7 +55,7 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
-      - uses: bartbie/lix-quick-install-action@e07739546a849eef488721581ac80fd10b5fa2d8
+      - uses: bartbie/lix-quick-install-action@v1.0.0
         with: {}
       - name: nix run
         run: nix run -f examples/pinned-fetchurl
@@ -66,7 +66,7 @@ jobs:
       - uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920
         with:
           egress-policy: audit
-      - uses: bartbie/lix-quick-install-action@e07739546a849eef488721581ac80fd10b5fa2d8
+      - uses: bartbie/lix-quick-install-action@v1.0.0
         with: {}
       - name: nix version
         run: nix --version
