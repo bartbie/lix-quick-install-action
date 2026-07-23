@@ -43,7 +43,6 @@ jobs:
           - ubuntu-24.04
           - ubuntu-24.04-arm
           - macos-15
-          - macos-15-intel
     timeout-minutes: 60
   release:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -128,7 +127,6 @@ jobs:
           - ubuntu-24.04
           - ubuntu-24.04-arm
           - macos-15
-          - macos-15-intel
         version:
           - 2.95.2
           - 2.94.2
@@ -176,7 +174,6 @@ jobs:
           - ubuntu-24.04
           - ubuntu-24.04-arm
           - macos-15
-          - macos-15-intel
         version:
           - 2.95.2
           - 2.94.2
